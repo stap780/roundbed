@@ -1,0 +1,109 @@
+<div class="row">
+	<div class="col-6 row my-3">
+
+<p>
+  <strong>Eid:</strong>
+  <%= @evatek.eid %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @evatek.url %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @evatek.title %>
+</p>
+
+<p>
+  <strong>Sku:</strong>
+  <%= @evatek.sku %>
+</p>
+
+<p>
+  <strong>Cprice:</strong>
+  <%= @evatek.cprice %>
+</p>
+
+<p>
+  <strong>Sdesc:</strong>
+  <%= @evatek.sdesc %>
+</p>
+
+<p>
+  <strong>Desc:</strong>
+  <%= @evatek.desc %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @evatek.price %>
+</p>
+
+<p>
+  <strong>Oprice:</strong>
+  <%= @evatek.oprice %>
+</p>
+
+<p>
+  <strong>Qt:</strong>
+  <%= @evatek.qt %>
+</p>
+
+<p>
+  <strong>Razmer eu:</strong>
+  <%= @evatek.razmer_eu %>
+</p>
+
+<p>
+  <strong>Razmer ru:</strong>
+  <%= @evatek.razmer_ru %>
+</p>
+
+<p>
+  <strong>Uzor:</strong>
+  <%= @evatek.uzor %>
+</p>
+
+<p>
+  <strong>Cvet:</strong>
+  <%= @evatek.cvet %>
+</p>
+
+<p>
+  <strong>Sostav:</strong>
+  <%= @evatek.sostav %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @evatek.weight %>
+</p>
+
+<p>
+  <strong>Vendor:</strong>
+  <%= @evatek.vendor %>
+</p>
+
+<p>
+  <strong>Col:</strong>
+  <%= @evatek.col %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @evatek.country %>
+</p>
+
+<p>
+  <strong>Image:</strong>
+  <%= @evatek.image %>
+</p>
+
+
+	<div class="col-3 btn-group my-3" role="group">
+		<%= link_to 'Редактировать', edit_evatek_path(@evatek), class: 'btn btn-success' %>
+		<%= link_to 'Назад', evateks_path, class: 'btn btn-info' %>
+	</div>
+</div>

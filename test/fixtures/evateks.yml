@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  eid: MyString
+  url: MyString
+  title: MyString
+  sku: MyString
+  cprice: 9.99
+  sdesc: MyString
+  desc: MyString
+  price: 9.99
+  oprice: 9.99
+  qt: MyString
+  razmer_eu: MyString
+  razmer_ru: MyString
+  uzor: MyString
+  cvet: MyString
+  sostav: MyString
+  weight: MyString
+  vendor: MyString
+  col: MyString
+  country: MyString
+  image: MyString
+
+two:
+  eid: MyString
+  url: MyString
+  title: MyString
+  sku: MyString
+  cprice: 9.99
+  sdesc: MyString
+  desc: MyString
+  price: 9.99
+  oprice: 9.99
+  qt: MyString
+  razmer_eu: MyString
+  razmer_ru: MyString
+  uzor: MyString
+  cvet: MyString
+  sostav: MyString
+  weight: MyString
+  vendor: MyString
+  col: MyString
+  country: MyString
+  image: MyString

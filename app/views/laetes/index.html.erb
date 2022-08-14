@@ -1,0 +1,89 @@
+<div class="row">
+<div class="col-2">
+	<h1 class="col-2">Laete</h1>
+	<p>Всего <%=Laete.count%><br>(больше 0 - <%=Laete.where.not(:qt => '0' ).count%>)</p>
+</div>
+<div class="col-2 d-none"><%= link_to 'Создать', new_laete_path , class: 'btn btn-light'%></div>
+<div class="col-2 ">
+	<%= link_to 'Загрузить/Обновить', download_laetes_path , class: 'btn btn-light'%>
+	<%= link_to 'Удалить <i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, delete_selected_laetes_path, class: 'btn btn-light', id: 'deleteAll', remote: true%>
+</div>
+<div class="col-2 "><%= link_to 'Создать файл insales', insales_laetes_path , class: 'btn btn-light'%>
+	<% file_ins = "#{Rails.public_path}"+'/insales_laete.csv'%>
+	<% check = File.file?(file_ins)%>
+	<% if check.present? %>
+	<p>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> <a href="http://68.183.166.25/insales_laete.csv">Скачать</a></p>
+	<% end %>
+</div>
+
+<div class="col-6">
+	<%= search_form_for @search, {class: 'form-inline'} do |f|%>
+		<%= f.search_field :sku_or_title_cont_any, placeholder: 'Артикул, название', class: "form-control input-sm" %>
+		<%= f.submit 'Поиск', class: 'btn btn-success ml-2' %>
+		<%= link_to 'Сбросить',laetes_path, class: 'btn btn-light' %>
+	<% end %>
+</div>
+
+
+</div>
+<div class="table-responsive">
+<table class="table table-hover table-condensed table-sm">
+  <thead>
+    <tr class="bg-light">
+	  <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
+      <th>Lid</th>
+      <th>Url</th>
+      <th>Название</th>
+      <th>Краткое</th>
+      <th>Полное</th>
+      <th>Sku</th>
+      <th>Закуп</th>
+      <th>Price</th>
+      <th>Старая</th>
+      <th><%= sort_link(@search, :qt, 'Кол') %></th>
+        <th style="min-width:250px;">Image</th>
+      <th>Razmer eu</th>
+      <th>Razmer ru</th>
+      <th>Uzor</th>
+      <th>Cvet</th>
+      <th>Sostav</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody id="items_table">
+    <% @laetes.each do |laete| %>
+      <tr>
+	    <td><%=check_box_tag "laete_ids[]", laete.id, false, class: 'laete_ids' %></td>
+        <td><%= link_to laete.lid, laete %></td>
+        <td><%= link_to truncate(laete.url, length: 17),  laete.url, :target => "_blank" %></td>
+        <td style="min-width: 300px;"><%= laete.title %></td>
+        <td><%= laete.sdesc %></td>
+        <td><%= laete.desc %></td>
+        <td><%= laete.sku %></td>
+        <td><%= laete.cprice %></td>
+        <td><%= laete.price %></td>
+        <td><%= laete.oprice %></td>
+        <td><%= laete.qt %></td>
+      <td class="row ml-0 mr-0">
+        <% if laete.image %><% laete.image.split(' ').each do |pict| %>
+        <div class="w-25">
+          <img class="img-thumbnail" src="<%= pict %>">
+        </div>
+        <% end %><% end %>
+      </td>
+        <td><%= laete.razmer_eu %></td>
+        <td><%= laete.razmer_ru %></td>
+        <td><%= laete.uzor %></td>
+        <td><%= laete.cvet %></td>
+        <td><%= laete.sostav %></td>
+        <td><%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_laete_path(laete) %></td>
+        <td><%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, laete, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<div class="apple_pagination">
+	<%= will_paginate @laetes %>
+</div>

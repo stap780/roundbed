@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  aid: MyString
+  sku: MyString
+  title: MyString
+  sdesc: MyString
+  desc: MyString
+  cprice: 9.99
+  price: 9.99
+  qt: MyString
+  image: MyString
+  sostav: MyString
+
+two:
+  aid: MyString
+  sku: MyString
+  title: MyString
+  sdesc: MyString
+  desc: MyString
+  cprice: 9.99
+  price: 9.99
+  qt: MyString
+  image: MyString
+  sostav: MyString

@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fid: MyString
+  sku: MyString
+  barcode: MyString
+  title: MyString
+  desc: MyString
+  feature: MyString
+  costprice: 9.99
+  price: 9.99
+  qt: MyString
+  image: MyString
+  vendor: MyString
+  model: MyString
+  i_param: MyString
+  cat: MyString
+
+two:
+  fid: MyString
+  sku: MyString
+  barcode: MyString
+  title: MyString
+  desc: MyString
+  feature: MyString
+  costprice: 9.99
+  price: 9.99
+  qt: MyString
+  image: MyString
+  vendor: MyString
+  model: MyString
+  i_param: MyString
+  cat: MyString

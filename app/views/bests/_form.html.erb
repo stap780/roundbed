@@ -1,0 +1,38 @@
+
+<%= simple_form_for(@best) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs row">
+    <%= f.input :sku, disabled: true, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :title, wrapper_html: { class: 'col-md-8 ' }  %>
+    <%= f.input :sdesc, as: :text, input_html: {  rows: 3 }, wrapper_html: { class: 'col-12 '}  %>
+    <%= f.input :desc, as: :text, input_html: {  rows: 3 }, wrapper_html: { class: 'col-12 ' } %>
+    <%= f.input :cprice, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :price, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :qt, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :sv_razmer, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_razmer, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_napolnit, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_visota, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_dlina, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_shirina, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_ves, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_sostav, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_osoben, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_tipmatrasa, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_garant, wrapper_html: { class: 'col-md-4 ' } %>
+    <%= f.input :p_forma, disabled: true, wrapper_html: { class: 'col-md-4'} %>
+  </div>
+    <% if @best.image.present? %>
+  <div class="ml-0 mr-0 row">
+  <% @best.image.split(' ').each do |pict| %>
+  <div class="col-1 "><img class="img-fluid img-thumbnail" src="<%= pict %>"></div>
+  <% end %>
+  </div>
+  <%end%>
+   <div class="col-3 btn-group my-3" role="group">
+    <%= f.button :submit, value: 'Обновить' , class: 'btn btn-success' %>
+    <%= link_to 'Назад', url_for(:back), class: 'btn btn-info' %>
+  </div>
+<% end %>

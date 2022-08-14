@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sku: MyString
+  title: MyString
+  sdesc: MyString
+  desc: MyString
+  cprice: 9.99
+  price: 9.99
+  qt: MyString
+  image: MyString
+  sv_razmer: MyString
+  p_razmer: MyString
+  p_napolnit: MyString
+  p_visota: MyString
+  p_dlina: MyString
+  p_shirina: MyString
+  p_ves: MyString
+  p_sostav: MyString
+  p_osoben: MyString
+  p_tipmatrasa: MyString
+  p_garant: MyString
+  p_forma: MyString
+
+two:
+  sku: MyString
+  title: MyString
+  sdesc: MyString
+  desc: MyString
+  cprice: 9.99
+  price: 9.99
+  qt: MyString
+  image: MyString
+  sv_razmer: MyString
+  p_razmer: MyString
+  p_napolnit: MyString
+  p_visota: MyString
+  p_dlina: MyString
+  p_shirina: MyString
+  p_ves: MyString
+  p_sostav: MyString
+  p_osoben: MyString
+  p_tipmatrasa: MyString
+  p_garant: MyString
+  p_forma: MyString

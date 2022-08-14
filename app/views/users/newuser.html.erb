@@ -1,0 +1,31 @@
+<style>
+	body {
+		background-color: #f5f5f5;
+	}
+.navbar{
+	display: none;
+}
+.footer{
+	display: none;
+}
+</style>
+		<div class="enter-form text-center">
+			<h1 class="h3 mb-3 font-weight-normal">Новый пользователь</h1>
+
+    <%= simple_form_for(@user) do |f| %>
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+			<%= f.input :role, label: false, as: :hidden , input_html: {value: 'admin'} %>
+        <%= f.input :email, label: false, placeholder: 'Email', input_html: { class: 'form-control' , autofocus: true}, wrapper_html: { class: 'form-group' }%>
+        <%= f.input :password, label: false , placeholder: 'Password', input_html: { class: 'form-control' }, wrapper_html: { class: 'form-group' }%>
+        <%= f.input :password_confirmation, label: false , placeholder: 'Password confirmation', input_html: { class: 'form-control'}, wrapper_html: { class: 'form-group' } %>
+
+
+      <div class="form-group">
+        <%= f.button :submit, 'Сохранить' , class: 'btn btn-success btn-lg btn-submit btn-block'%>
+        <%= link_to 'Назад', root_url, class: 'btn btn-default' %>
+      </div>
+    <% end %>
+
+    </div>

@@ -1,0 +1,31 @@
+
+<%= simple_form_for @laete, :html=> { class: 'row' } do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="col-6 row my-3">
+    <%= f.input :lid, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' }%>
+    <%= f.input :url, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-12 ' }%>
+    <%= f.input :title, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-12 ' }%>
+    <%= f.input :cprice, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' }%>
+    <%= f.input :price, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' }%>
+    <%= f.input :oprice, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' }%>
+    <%= f.input :sku, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' }%>
+    <%= f.input :qt, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' }%>
+    <%= f.input :razmer_eu, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' }%>
+    <%= f.input :razmer_ru, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :cvet, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+  </div>
+  <div class="col-6 row my-3">
+    <%= f.input :uzor, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :sostav, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :sdesc, as: :text, input_html: { class: 'form-control' , rows: 3}, wrapper_html: { class: 'col-12 ' }%>
+    <%= f.input :desc, as: :text, input_html: { class: 'form-control' , rows: 3 }, wrapper_html: { class: 'col-12 ' } %>
+    <%= f.input :image, as: :text, input_html: { class: 'form-control' , rows: 5 }, wrapper_html: { class: 'col-12 ' } %>
+  </div>
+
+  <div class="col-3 btn-group my-3" role="group">
+    <%= f.button :submit, value: 'Обновить' , class: 'btn btn-success' %>
+    <%= link_to 'Назад', url_for(:back), class: 'btn btn-info' %>
+  </div>
+<% end %>

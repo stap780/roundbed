@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Permcl Actions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @permcl_actions.each do |permcl_action| %>
+      <tr>
+        <td><%= permcl_action.title %></td>
+        <td><%= link_to 'Show', permcl_action %></td>
+        <td><%= link_to 'Edit', edit_permcl_action_path(permcl_action) %></td>
+        <td><%= link_to 'Destroy', permcl_action, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Permcl action', new_permcl_action_path %>

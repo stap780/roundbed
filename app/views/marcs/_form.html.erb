@@ -1,0 +1,32 @@
+
+<%= simple_form_for @marc, :html=> { class: 'row' } do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs row">
+    <%= f.input :sku, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :title, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :sdesc, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :desc, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :cprice, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :price, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :qt, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-2 ' } %>
+    <%= f.input :razmer, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :razmer2, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :cvet, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :sostav, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+    <%= f.input :url, input_html: { class: 'form-control' }, wrapper_html: { class: 'col-4 ' } %>
+  </div>
+  <% if @marc.image.present? %>
+  <div class="row ml-0 mr-0">
+  <% @marc.image.split(' ').each do |pict| %>
+  <div class="w-25"><img class="img-fluid img-thumbnail" src="<%= pict %>"></div>
+  <% end %>
+  </div>
+  <% end %>
+
+  <div class="col-3 btn-group my-3" role="group">
+    <%= f.button :submit, value: 'Обновить' , class: 'btn btn-success' %>
+    <%= link_to 'Назад', url_for(:back), class: 'btn btn-info' %>
+  </div>
+<% end %>

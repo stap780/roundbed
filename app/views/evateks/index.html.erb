@@ -1,0 +1,91 @@
+<div class="row align-items-center justify-content-center">
+<div class="col-3">
+	<h2>Evatek</h2>
+	<small>Всего <%=Evatek.count%> (> 0 - <%=Evatek.where.not(:qt => '0' ).count%>) Без штрихкода - <%=Evatek.where(sku: [nil, '']).count%> Отфильтровано - <%=@evateks.count%></small>
+</div>
+<div class="col-2 ">
+	<%# form_tag import_evateks_path, multipart: true do %>
+	<%# file_field_tag :file , :class =>'import_file'%><%# submit_tag "Импорт", :class =>'btn btn-light' %>
+	<%# end %>
+	<div class="btn-group ml-3" role="group" aria-label="Button group with nested dropdown">
+		<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		Действия
+		</button>
+		<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+		<%= link_to "Импорт файла", file_import_evateks_path, remote: 'true', id: 'file_import', 'data-toggle' =>  "modal", 'data-target' => '#modal-edit', class: 'dropdown-item' %>
+		<%= link_to 'Создать', new_evatek_path , class: 'dropdown-item d-none'%>
+		<%= link_to 'Загрузить/Обновить', download_evateks_path , class: 'dropdown-item'%>
+		<%= link_to 'Создать файл insales', insales_evateks_path , class: 'dropdown-item'%>
+		<% file_ins = "#{Rails.public_path}"+'/insales_evatek.csv'%>
+		<% check = File.file?(file_ins)%>
+		<% if check.present? %>
+		<a href="http://68.183.166.25/insales_evatek.csv" class='dropdown-item'>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> Скачать</a>
+		<% end %>
+		</div>
+		<%= link_to '<span class="oi oi-trash"></span>'.html_safe, delete_selected_evateks_path, class: 'btn btn-outline-dark', id: 'deleteAll', remote: true%>
+	</div>	
+</div>
+<%= search_form_for @search, {class: 'form-inline col-md-7 pl-0 pr-0'} do |f|%>
+	<%= f.search_field :eid_cont_any, placeholder: 'Еватек ID', class: "form-control input-sm", style: "max-width:120px;" %>
+	<%= f.search_field :sku_or_title_cont_any, placeholder: 'Штрихкод, название', class: "form-control input-sm" %>
+	<%= f.select :vendor_cont, Evatek.all.pluck(:vendor).uniq, { :prompt => 'Бренд'}, class: "form-control" %>
+	<%= button_tag(type: 'submit', :class => "btn btn-success") do %><span class="oi oi-magnifying-glass"></span><% end %>
+	<%= link_to '<span class="oi oi-reload"></span>'.html_safe, evateks_path, class: 'btn btn-outline-dark' %>
+<% end %>
+
+</div>
+<div class="table-responsive">
+<table class="table table-hover table-condensed table-sm">
+  <thead>
+    <tr class="bg-light">
+	  <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
+      <th>Eid</th>
+      <th>Title</th>
+      <th><%= sort_link(@search, :sku, 'Штрихкод') %></th>
+      <th>З.Ц</th>
+      <th>П.Ц</th>
+      <th>Ст.Ц</th>
+      <th><%= sort_link(@search, :qt, 'Кол') %></th>
+      <th>Разм(eu)</th>
+      <th>Разм(ru)</th>
+      <th>Цвет</th>
+      <th>Краткое</th>
+      <th>Полное</th>
+      <th >Info</th>
+      <th style="min-width:150px;">Image</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody id="items_table">
+    <% @evateks.each do |evatek| %>
+      <tr>
+	    <td><%=check_box_tag "evatek_ids[]", evatek.id, false, class: 'evatek_ids' %></td>
+        <td><%= evatek.eid %><%= link_to '<br><span class="oi oi-eye"></span>'.html_safe, evatek.url, :target => "_blank"%></td>
+        <td style="min-width: 300px;"><%=link_to evatek.title, edit_evatek_path(evatek) %></td>
+        <td><%= best_in_place evatek, :sku %></td>
+        <td><%= evatek.cprice %></td>
+        <td><%= evatek.price %></td>
+        <td><%= evatek.oprice %></td>
+        <td><%= evatek.qt %></td>
+        <td><%= evatek.razmer_eu %></td>
+        <td><%= evatek.razmer_ru %></td>
+        <td><%= evatek.cvet %></td>
+        <td><%= evatek.sdesc %></td>
+        <td><%= truncate(evatek.desc, length: 30) %></td>
+        <td>Производитель: <%= evatek.vendor %> Коллекция: <%= evatek.col %> Страна: <%= evatek.country %> Uzor: <%= evatek.uzor %> Состав: <%= evatek.sostav %> Вес: <%= evatek.weight %></td>
+      <td class="row ml-0 mr-0">
+        <% if evatek.image %><% evatek.image.split(' ').each do |pict| %>
+        <div class="w-25"><img class="img-thumbnail" src="<%= pict %>"></div>
+        <% end %><% end %>
+      </td>
+<!--         <td><%# link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_evatek_path(evatek) %></td> -->
+        <td><%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, evatek, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<div class="apple_pagination">
+	<%= will_paginate @evateks %>
+</div>

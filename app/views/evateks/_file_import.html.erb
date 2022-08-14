@@ -1,0 +1,11 @@
+
+<div class="form-group"><label class="col-sm-12 control-label"></label></div>		
+<%= form_tag import_evateks_path, multipart: true do %>
+<div class="modal-body">
+	<%= file_field_tag :file , :class =>'import_file'%>		
+</div>
+<div class="form-group mt-3">
+	<%= submit_tag "Импорт", class: "btn btn-primary" %>
+	<button type="button" class="btn btn-outline-dark" data-dismiss="modal">Отменить</button>
+</div>
+<% end %>

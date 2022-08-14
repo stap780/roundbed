@@ -1,0 +1,21 @@
+<style>
+	body {
+		background-color: #f5f5f5;
+	}
+.navbar{
+	display: none;
+}
+.footer{
+	display: none;
+}
+</style>
+		<div class="enter-form text-center">
+			<h1 class="h3 mb-3 font-weight-normal">Восстановление пароля</h1>
+		<%= form_tag password_resets_path, :method => :post do  %>
+		  <div class="form-group">
+		    <%= text_field_tag :email,params[:email], class: 'form-control', placeholder: "Email address", autofocus: true %>
+		  </div>
+		  <%= submit_tag "Cброс пароля", class: 'btn btn-success btn-lg btn-submit btn-block' %>
+			<%= link_to 'Назад', url_for(:back), class: 'btn btn-default' %>
+		<%end%>
+		</div>

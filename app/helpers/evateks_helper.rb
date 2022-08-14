@@ -1,0 +1,2 @@
+module EvateksHelper
+end

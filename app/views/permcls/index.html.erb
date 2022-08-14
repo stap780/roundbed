@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Permcls</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Systitle</th>
+      <th>Title</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @permcls.each do |permcl| %>
+      <tr>
+        <td><%= permcl.systitle %></td>
+        <td><%= permcl.title %></td>
+        <td><%= link_to 'Show', permcl %></td>
+        <td><%= link_to 'Edit', edit_permcl_path(permcl) %></td>
+        <td><%= link_to 'Destroy', permcl, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Permcl', new_permcl_path %>

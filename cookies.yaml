@@ -1,0 +1,87 @@
+---
+alvitek.com.ru:
+  "/":
+    PHPSESSID: !ruby/object:Mechanize::Cookie
+      name: PHPSESSID
+      value: 740fd79f6272d8bfafe1fd56a5144ee1
+      domain: alvitek.com.ru
+      for_domain: false
+      path: "/"
+      secure: false
+      httponly: true
+      expires: 
+      max_age: 
+      created_at: 2019-05-05 06:40:47.840220979 +00:00
+      accessed_at: &1 2019-05-05 06:40:48.795981499 +00:00
+    BITRIX_SM_SALE_UID: !ruby/object:Mechanize::Cookie
+      name: BITRIX_SM_SALE_UID
+      value: 9c67fcce7a6fe40deb91bf0c55faef99
+      domain: alvitek.com.ru
+      for_domain: false
+      path: "/"
+      secure: false
+      httponly: false
+      expires: Wed, 29 Apr 2020 06:40:49 GMT
+      max_age: 
+      created_at: 2019-05-05 06:40:48.511368205 +00:00
+      accessed_at: *1
+    BITRIX_SM_UIDH: !ruby/object:Mechanize::Cookie
+      name: BITRIX_SM_UIDH
+      value: c11bad4febbbde8a16df699fdcbe6863
+      domain: alvitek.com.ru
+      for_domain: false
+      path: "/"
+      secure: false
+      httponly: true
+      expires: Mon, 08 Apr 2024 06:40:49 GMT
+      max_age: 
+      created_at: 2019-05-05 06:40:48.510878109 +00:00
+      accessed_at: *1
+    BITRIX_SM_UIDL: !ruby/object:Mechanize::Cookie
+      name: BITRIX_SM_UIDL
+      value: finenko72%40hotmail.com
+      domain: alvitek.com.ru
+      for_domain: false
+      path: "/"
+      secure: false
+      httponly: true
+      expires: Mon, 08 Apr 2024 06:40:49 GMT
+      max_age: 
+      created_at: 2019-05-05 06:40:48.511094783 +00:00
+      accessed_at: *1
+    BITRIX_SM_NCC: !ruby/object:Mechanize::Cookie
+      name: BITRIX_SM_NCC
+      value: Y
+      domain: alvitek.com.ru
+      for_domain: false
+      path: "/"
+      secure: false
+      httponly: false
+      expires: Wed, 29 Apr 2020 06:40:49 GMT
+      max_age: 
+      created_at: 2019-05-05 06:40:48.512415321 +00:00
+      accessed_at: *1
+    BITRIX_SM_LOGIN: !ruby/object:Mechanize::Cookie
+      name: BITRIX_SM_LOGIN
+      value: finenko72%40hotmail.com
+      domain: alvitek.com.ru
+      for_domain: false
+      path: "/"
+      secure: false
+      httponly: false
+      expires: Mon, 08 Apr 2024 06:40:49 GMT
+      max_age: 
+      created_at: 2019-05-05 06:40:48.511945757 +00:00
+      accessed_at: *1
+    BITRIX_SM_SOUND_LOGIN_PLAYED: !ruby/object:Mechanize::Cookie
+      name: BITRIX_SM_SOUND_LOGIN_PLAYED
+      value: Y
+      domain: alvitek.com.ru
+      for_domain: false
+      path: "/"
+      secure: false
+      httponly: false
+      expires: 
+      max_age: 
+      created_at: 2019-05-05 06:40:48.512141464 +00:00
+      accessed_at: *1

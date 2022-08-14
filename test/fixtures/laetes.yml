@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lid: MyString
+  url: MyString
+  title: MyString
+  sku: MyString
+  price: 9.99
+  qt: MyString
+  razmer_eu: MyString
+  razmer_ru: MyString
+  uzor: MyString
+  cvet: MyString
+  sostav: MyString
+  image: MyString
+
+two:
+  lid: MyString
+  url: MyString
+  title: MyString
+  sku: MyString
+  price: 9.99
+  qt: MyString
+  razmer_eu: MyString
+  razmer_ru: MyString
+  uzor: MyString
+  cvet: MyString
+  sostav: MyString
+  image: MyString

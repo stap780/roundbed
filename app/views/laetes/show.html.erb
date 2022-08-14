@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-6 row my-3">
+		<div class='col-4 my-1'><strong>Lid:</strong><%= @laete.lid %></div>
+		<div class='col-12 my-1'><strong>Url:</strong><%= @laete.url %></div>
+		<div class='col-12 my-1'><strong>Title:</strong><%= @laete.title %></div>
+		<div class='col-4 my-1'><strong>cprice:</strong><%= @laete.cprice %></div>
+		<div class='col-4 my-1'><strong>price:</strong><%= @laete.price %></div>
+		<div class='col-4 my-1'><strong>oprice:</strong><%= @laete.oprice %></div>
+		<div class='col-4 my-1'><strong>Sku:</strong><%= @laete.sku %></div>
+		<div class='col-4 my-1'><strong>Qt:</strong><%= @laete.qt %></div>
+		<div class='col-4 my-1'><strong>razmer_int:</strong><%= @laete.razmer_eu %></div>
+		<div class='col-4 my-1'><strong>razmer_ru:</strong><%= @laete.razmer_ru %></div>
+		<div class='col-4 my-1'><strong>cvet:</strong><%= @laete.cvet %></div>
+	</div>
+	<div class="col-6 row my-3">  
+		<div class='col-4 my-1'><strong>uzor:</strong><%= @laete.uzor %></div>
+		<div class='col-4 my-1'><strong>sostav:</strong><%= @laete.sostav %></div>
+		<div class='col-12 my-1'><strong>sdesc:</strong><%= @laete.sdesc %></div>
+		<div class='col-12 my-1'><strong>desc:</strong><%= @laete.desc %></div>
+		<div class='col-12 my-1'><strong>image:</strong><%= @laete.image %></div>
+	</div>
+
+	<div class="col-3 btn-group my-3" role="group">
+		<%= link_to 'Редактировать', edit_laete_path(@laete), class: 'btn btn-success' %>
+		<%= link_to 'Назад', laetes_path, class: 'btn btn-info' %>
+	</div>
+</div>
+

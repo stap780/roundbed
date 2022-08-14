@@ -1,0 +1,57 @@
+
+<%= simple_form_for(@alvitek) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :aid %>
+    <%= f.input :sku %>
+    <%= f.input :title %>
+    <%= f.input :desc %>
+    <%= f.input :qt %>
+    <%= f.input :price %>
+    <%= f.input :mprice %>
+    <%= f.input :image %>
+    <%= f.input :cat %>
+    <%= f.input :col %>
+    <%= f.input :vendor %>
+    <%= f.input :country, as: :text %>
+    <%= f.input :line %>
+    <%= f.input :razmer %>
+    <%= f.input :teplota %>
+    <%= f.input :podderjka %>
+    <%= f.input :razm_nav %>
+    <%= f.input :razm_podod %>
+    <%= f.input :razmer_prostini %>
+    <%= f.input :tip_prostini %>
+    <%= f.input :visota %>
+    <%= f.input :napolnitel %>
+    <%= f.input :napolnitel_chehla %>
+    <%= f.input :napolnitel_yadra %>
+    <%= f.input :ves_napolnitel %>
+    <%= f.input :ves_nopolnitel_chehla %>
+    <%= f.input :ves_napolnitel_yadra %>
+    <%= f.input :tkan %>
+    <%= f.input :sostav_tkan %>
+    <%= f.input :tip_zast %>
+    <%= f.input :tip_zast_navol %>
+    <%= f.input :tip_zast_podod %>
+    <%= f.input :tip_krepl %>
+    <%= f.input :tip_stejki %>
+    <%= f.input :okantovka %>
+    <%= f.input :upak %>
+    <%= f.input :tip_upak %>
+    <%= f.input :kol_upak %>
+    <%= f.input :material %>
+    <%= f.input :plotnost %>
+    <%= f.input :barcode %>
+    <%= f.input :cvet %>
+    <%= f.input :tkan_verh %>
+    <%= f.input :tkan_niz %>
+    <%= f.input :sostav %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

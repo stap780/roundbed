@@ -1,0 +1,105 @@
+<div class="row">
+<div class="col-2">
+	<h1>Cleo</h1>
+	<p>Всего <%=Cleo.count%><br>(больше 0 - <%=Cleo.where.not(:qt => '0' ).count%>)</p>
+</div>
+<div class="col-2 ">
+	<%= form_tag import_cleos_path, multipart: true do %>
+	<%= file_field_tag :file , :class =>'import_file'%><%= submit_tag "Импорт", :class =>'btn btn-light' %>
+	<% end %>
+</div>
+<div class="col-2 ">
+	<%= link_to 'Создать', new_cleo_path , class: 'btn btn-light d-none'%>
+	<%= link_to 'Загрузить/Обновить', download_cleos_path , class: 'btn btn-light'%>
+	<%= link_to 'Удалить <i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, delete_selected_cleos_path, class: 'btn btn-light', id: 'deleteAll', remote: true%>
+</div>
+<div class="col-2 "><%= link_to 'Создать файл insales', insales_cleos_path , class: 'btn btn-light'%>
+	<% file_ins = "#{Rails.public_path}"+'/insales_cleo.csv'%>
+	<% check = File.file?(file_ins)%>
+	<% if check.present? %>
+	<p>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> <a href="http://68.183.166.25/insales_cleo.csv">Скачать</a></p>
+	<% end %>
+</div>
+
+<div class="col-4">
+	<%= search_form_for @search, {class: 'form-inline'} do |f|%>
+		<%= f.search_field :sku_or_title_cont_any, placeholder: 'Артикул, название', class: "form-control input-sm" %>
+		<%= f.submit 'Поиск', class: 'btn btn-success ml-2' %>
+		<%= link_to 'Сбросить',cleos_path, class: 'btn btn-light' %>
+	<% end %>
+</div>
+
+</div>
+<div class="table-responsive">
+<table class="table table-hover table-condensed table-sm">
+  <thead>
+    <tr class="bg-light">
+	    <th><%= check_box_tag 'selectAll', value = 'selectAll'%></th>
+      <th>Sku</th>
+      <th>Title</th>
+      <th>Sdesc</th>
+      <th>Desc</th>
+      <th>Cprice</th>
+      <th>Price</th>
+      <th>Qt</th>
+      <th>Image</th>
+      <th>Barcode</th>
+      <th>Dizain</th>
+      <th>Cvet</th>
+      <th>Tema</th>
+      <th>Okras</th>
+      <th>Otdelka</th>
+      <th>Zast</th>
+      <th>Kvopred</th>
+      <th>Tkan</th>
+      <th>Plotnost</th>
+      <th>Sostav</th>
+      <th>Obrazmer</th>
+      <th>Pr razmer</th>
+      <th>Obem</th>
+      <th>Ves</th>
+      <th>Razmer upak</th>
+      <th>Vid upak</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody id="items_table">
+    <% @cleos.each do |cleo| %>
+      <tr>
+	    <td><%=check_box_tag "cleo_ids[]", cleo.id, false, class: 'cleo_ids' %></td>
+        <td><%= link_to cleo.sku, cleo %></td>
+        <td style="min-width:250px;"><%= cleo.title %></td>
+        <td><%= truncate(cleo.sdesc, length: 25) %></td>
+        <td><%= truncate(cleo.desc, length: 25) %></td>
+        <td><%= cleo.cprice %></td>
+        <td><%= cleo.price %></td>
+        <td><%= cleo.qt %></td>
+        <td><%= cleo.image %></td>
+        <td><%= cleo.barcode %></td>
+        <td><%= cleo.dizain %></td>
+        <td><%= cleo.cvet %></td>
+        <td><%= cleo.tema %></td>
+        <td><%= cleo.okras %></td>
+        <td><%= cleo.otdelka %></td>
+        <td><%= cleo.zast %></td>
+        <td><%= cleo.kvopred %></td>
+        <td><%= cleo.tkan %></td>
+        <td><%= cleo.plotnost %></td>
+        <td><%= cleo.sostav %></td>
+        <td><%= cleo.obrazmer %></td>
+        <td><%= cleo.pr_razmer %></td>
+        <td><%= cleo.obem %></td>
+        <td><%= cleo.ves %></td>
+        <td><%= cleo.razmer_upak %></td>
+        <td><%= cleo.vid_upak %></td>
+        <td><%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_cleo_path(cleo) %></td>
+        <td><%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, cleo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<div class="apple_pagination">
+	<%= will_paginate @cleos %>
+</div>

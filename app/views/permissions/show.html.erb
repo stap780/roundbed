@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @permission.user_id %>
+</p>
+
+<p>
+  <strong>Permcl:</strong>
+  <%= @permission.permcl_id %>
+</p>
+
+<p>
+  <strong>Permcl action:</strong>
+  <%= @permission.permcl_action_id %>
+</p>
+
+<%= link_to 'Edit', edit_permission_path(@permission) %> |
+<%= link_to 'Back', permissions_path %>

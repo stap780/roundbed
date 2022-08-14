@@ -1,0 +1,11 @@
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+
+<div class="col-md-3 btn-group my-3" role="group">
+  <% if can? :update, @user %><%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-success'%><% end %>
+  <%= link_to 'Назад', users_path, class: 'btn btn-info' %>
+</div>

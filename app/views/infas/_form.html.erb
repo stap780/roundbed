@@ -1,0 +1,26 @@
+
+<%= simple_form_for(@infa) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :fid %>
+    <%= f.input :sku %>
+    <%= f.input :barcode %>
+    <%= f.input :title %>
+    <%= f.input :desc %>
+    <%= f.input :feature %>
+    <%= f.input :costprice %>
+    <%= f.input :price %>
+    <%= f.input :qt %>
+    <%= f.input :image %>
+    <%= f.input :vendor %>
+    <%= f.input :model %>
+    <%= f.input :i_param %>
+    <%= f.input :cat %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

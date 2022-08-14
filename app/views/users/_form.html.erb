@@ -1,0 +1,39 @@
+<%= simple_form_for @user, :html=> { class: 'row col-6' } do |f| %>
+  <%= f.error_notification %>
+  <span id="user" style="display:none;"><%= @user.id %></span>
+
+	<div class="col-md-12">
+		<%= f.input :email , input_html: { class: 'form-control' }, wrapper_html: { class: 'form-group' }%>
+		<%= f.input :password , input_html: { class: 'form-control' }, wrapper_html: { class: 'form-group' }%>
+		<%= f.input :password_confirmation , input_html: { class: 'form-control' }, wrapper_html: { class: 'form-group' }%>
+	</div>
+	<div class="col-md-6" style="display:none;">
+		<%= f.label :role, 'Роль', class: "control-label"%>
+		<%= f.collection_select(:role, User::ROLES, :to_s, lambda{|i| i.to_s.humanize}, {}, {:class=>'form-control'})%>
+	<div class="permission_data">
+		<h3>Доступ</h3>
+		<% @permcl.each do |permcl| %>
+			<%= fields_for 'permissions[]', permcl do |p|%>
+				<%= p.hidden_field 'user_id', value: @user.id %>
+				<div class="permcl_id-<%=permcl.id%>">
+				<%= p.hidden_field 'permcl_id', value: p.object.id %><%= p.object.title%>
+				<p class="permcl_action_ids">
+				<% @permcl_action.each do |action|%>
+					<%= p.fields_for 'permcl_action_ids[]', action do |a|%>
+						<span class = "action-id-<%=permcl.id%>-<%=action.id%>" id="<%=action.id%>"><%= a.check_box 'action_value', class: "checkbox" %> <%= action.title%></span>
+					<% end %>
+				<% end %>
+				</p>
+			</div>
+			<% end %>
+		<% end %>
+	</div>
+  </div>
+
+
+  <div class="col-md-3 btn-group my-3" role="group">
+    <%= f.button :submit, 'Сохранить' , class: 'btn btn-success'%>
+    <%= link_to 'Назад', url_for(:back), class: 'btn btn-info' %>
+  </div>
+
+<% end %>
