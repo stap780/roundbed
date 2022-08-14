@@ -43,4 +43,4 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 set :format, :pretty
 set :log_level, :info
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
-after 'deploy:publishing', 'unicorn:restart'
+# after 'deploy:publishing', 'unicorn:restart'
