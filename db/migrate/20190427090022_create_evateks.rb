@@ -1,4 +1,4 @@
-class CreateEvateks < ActiveRecord::Migration
+class CreateEvateks < ActiveRecord::Migration[5.2]
   def change
     create_table :evateks do |t|
       t.string :eid

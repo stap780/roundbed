@@ -1,4 +1,4 @@
-class CreateCleos < ActiveRecord::Migration
+class CreateCleos < ActiveRecord::Migration[5.2]
   def change
     create_table :cleos do |t|
       t.string :sku

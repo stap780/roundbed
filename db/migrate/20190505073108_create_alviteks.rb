@@ -1,4 +1,4 @@
-class CreateAlviteks < ActiveRecord::Migration
+class CreateAlviteks < ActiveRecord::Migration[5.2]
   def change
     create_table :alviteks do |t|
       t.string :aid

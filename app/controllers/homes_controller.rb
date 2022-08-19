@@ -1,5 +1,5 @@
 class HomesController < ApplicationController
-  before_filter :authorize
+  before_action :authorize
   before_action :set_home, only: [:show, :edit, :update, :destroy]
 
   # GET /homes

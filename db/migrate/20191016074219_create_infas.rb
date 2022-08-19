@@ -1,4 +1,4 @@
-class CreateInfas < ActiveRecord::Migration
+class CreateInfas < ActiveRecord::Migration[5.2]
   def change
     create_table :infas do |t|
       t.string :fid

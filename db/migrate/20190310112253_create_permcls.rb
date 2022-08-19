@@ -1,4 +1,4 @@
-class CreatePermcls < ActiveRecord::Migration
+class CreatePermcls < ActiveRecord::Migration[5.2]
   def change
     create_table :permcls do |t|
       t.string :systitle

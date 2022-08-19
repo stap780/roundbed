@@ -1,4 +1,4 @@
-class CreateLaetes < ActiveRecord::Migration
+class CreateLaetes < ActiveRecord::Migration[5.2]
   def change
     create_table :laetes do |t|
       t.string :lid

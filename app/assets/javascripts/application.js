@@ -1,68 +1,55 @@
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
-// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
-// or any plugin's vendor/assets/javascripts directory can be referenced here using a relative path.
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, or any plugin's
+// vendor/assets/javascripts directory can be referenced here using a relative path.
 //
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
-// compiled file.
+// compiled file. JavaScript code in this file should be added after the last require_* statement.
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
 //= require jquery
-//= require jquery_ujs
-//= require jquery-ui
-//= require autocomplete-rails
 //= require best_in_place
+//= require jquery_ujs
+//= require jquery-ui/widgets/autocomplete
+//= require autocomplete-rails
 //= require popper
 //= require bootstrap
-//= require bootstrap-sprockets
 //= require cocoon
-//= require jquery-fileupload/basic
-//= require jquery-fileupload/vendor/tmpl
-//= require jquery.ui.touch-punch
-//= require bootstrap-editable
-//= require bootstrap-editable-rails
 //= require_tree .
 
 
-$(document).ready(function(){
-	$(".best_in_place").best_in_place();
-	$("a[rel~=popover], .has-popover").popover();
-	$("a[rel~=tooltip], .has-tooltip").tooltip();
-	$('.dropdown-toggle').dropdown();
+$(document).ready(function() {
 
-	$('[data-toggle="popover"]').popover({
-		container: 'body'
-	});
+  $(".alert").delay(4000).slideUp(200, function() {
+    $(this).alert('close');
+  });
 
-	$(".alert" ).fadeOut(5000);
-
-	$('#selectAll').click(function(){
-		if (this.checked){
-			$(':checkbox').each(function(){
-			  this.checked = true;
-			});
-		} else {
-			$(':checkbox').each(function(){
-			  this.checked = false;
-			});
-		}
-	});
-
-	//$.fn.editable.defaults.mode = 'inline';
-	$('.editable').editable({ 
-		mode: 'inline'
-	});
-
+  // SELECT ALL //
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;
+      });
+      $('#deleteAll').show();
+    } else {
+      $(':checkbox').each(function() {
+        this.checked = false;
+      });
+      $('#deleteAll').hide();
+    }
+  });
+  // SELECT ALL //
+  // DELETE ALL //
   $('#deleteAll').click(function() {
     // event.preventDefault();
     var array = [];
     $('#items_table :checked').each(function() {
       array.push($(this).val());
     });
-
     $.ajax({
       type: "POST",
       url: $(this).attr('href') + '.json',
@@ -82,7 +69,21 @@ $(document).ready(function(){
         console.log(jqXHR);
       }
     })
+  });
+  // DELETE ALL //
 
+  // $('#file').click(function() {
+  //   $('.import_file_submit').css('display', 'block');
+  // });
+
+  // DELETE IMAGE //
+  $(".delete-image").on("ajax:success", function(event, data, status, xhr) {
+    var response = data.message;
+    console.log('Response is => ' + response);
+    if (data.message === 'destroyed') {
+      $(this).closest('tr').fadeOut();
+      $(this).closest('.image-item').fadeOut();
+    }
   });
 
 

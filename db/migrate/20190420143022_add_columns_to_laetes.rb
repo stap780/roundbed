@@ -1,4 +1,4 @@
-class AddColumnsToLaetes < ActiveRecord::Migration
+class AddColumnsToLaetes < ActiveRecord::Migration[5.2]
   def change
     add_column :laetes, :cprice, :decimal
     add_column :laetes, :oprice, :decimal

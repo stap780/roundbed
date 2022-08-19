@@ -1,4 +1,4 @@
-class CreateMarcs < ActiveRecord::Migration
+class CreateMarcs < ActiveRecord::Migration[5.2]
   def change
     create_table :marcs do |t|
       t.string :sku

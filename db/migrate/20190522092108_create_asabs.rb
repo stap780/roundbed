@@ -1,4 +1,4 @@
-class CreateAsabs < ActiveRecord::Migration
+class CreateAsabs < ActiveRecord::Migration[5.2]
   def change
     create_table :asabs do |t|
       t.string :aid
