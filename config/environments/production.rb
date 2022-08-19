@@ -25,7 +25,7 @@ Rails.application.configure do
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = Uglifier.new(harmony: true)
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
@@ -76,10 +76,10 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  
+
 	config.action_mailer.perform_deliveries = true
 	config.action_mailer.delivery_method = :smtp
-  
+
   config.action_mailer.smtp_settings = {
 	tls: true,
 	address: "smtp.yandex.com",
@@ -88,9 +88,9 @@ Rails.application.configure do
 	authentication: "login",
 	enable_starttls_auto: true,
 	user_name: 'info@roundbed.ru',
-	password: 'Info15'	
-  } 
-  
+	password: 'Info15'
+  }
+
   config.action_mailer.default_url_options = { host: "http://68.183.166.25" }
 
 
