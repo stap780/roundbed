@@ -1,6 +1,6 @@
 class Evatek < ActiveRecord::Base
 	validates :eid, uniqueness: true
-	
+
 	def self.download
 		puts "start Evatek download"
 # 	Evatek.destroy_all
@@ -9,12 +9,12 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 
 		productbefore = Evatek.count
 		uri = "https://evateks.ru/export/?type=xml&brand=1&brand=15&brand=2&brand=13&brand=67&brand=36&brand=94&brand=38&add=Category&add=Postel&add=Dimensions&add=Description"
-	
+
 	    response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
 	    data = Nokogiri::XML(response)
 	    product = "Items/Item"
 	    mypr = data.xpath(product)
-		
+
 		mypr.each do |pr|
 			item_id = pr["id"]
 # 			if item_id == '31103'
@@ -31,7 +31,7 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 				pict.push(pic.text)
 			end
 			image = pict.join(' ')
-# 			p1 = pr.xpath("param [@name='Количество ягод']").text 			
+# 			p1 = pr.xpath("param [@name='Количество ягод']").text
 			cvet = pr.xpath("Color").text.strip
 			sostav = pr.xpath("Composition").text.strip
 			sdesc = ''
@@ -40,7 +40,7 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 			vendor = pr.xpath("Producer").text
 			col = pr.xpath("Collection").text
 			country = pr.xpath("Country").text
-			
+
 			file_razmer = pr.xpath("Size").text.gsub('one size ','').split(',')
 			file_razmer.each do |razmer|
 # 				puts 'razmer - '+razmer.to_s
@@ -64,7 +64,7 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 				else
 					eid = item_id.to_s+"-"+razmer_ru.to_s
 				end
-				
+
 				evatek = Evatek.find_by_eid(eid)
 				if evatek
 					evatek.update_attributes(:url => url, :title => title, :price => price, :sostav => sostav, :image => image, :sdesc => sdesc, :desc => desc, :weight => weight, :vendor => vendor, :col => col, :country => country )#, :razmer_ru => razmer_ru, :cvet => cvet
@@ -72,16 +72,16 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 					Evatek.create(:eid => eid, :url => url, :title => title, :price => price, :razmer_eu => razmer_eu, :razmer_ru => razmer_ru, :cvet => cvet, :sostav => sostav, :image => image, :sdesc => sdesc, :desc => desc, :weight => weight, :vendor => vendor, :col => col, :country => country )
 				end
 			end
-			
+
 # 			end
 	  	end
-		
+
 # 	  	Evatek.oldprice
 		productafter = Evatek.count
 		EvatekMailer.download(productbefore, productafter).deliver_now
 		puts "finish Evatek download"
 	end
-	
+
 	def self.insales_to_csv
 		puts "Файл Evatek инсалес"
 		file_ins = "#{Rails.public_path}"+'/insales_evatek.csv'
@@ -89,7 +89,7 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 		if check.present?
 			File.delete(file_ins)
 		end
-		
+
 		@evateks = Evatek.where.not(sku: [nil, '']).order(:id)
 		file = "#{Rails.root}/public/insales_evatek.csv"
 		CSV.open( file, 'w') do |writer|
@@ -117,13 +117,13 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 			country = pr.country
 			col = pr.col
 			writer << [title, sdesc, desc, sku, image, cprice, price, oprice, qt, weight , razmer_eu, razmer_ru,  cvet, uzor , sostav, country, col, vendor, 'Evatek' ]
-			end 
-		end #CSV.open    
-		
+			end
+		end #CSV.open
+
 		EvatekMailer.insales.deliver_now
 		puts 'Файл Evatek инсалес сформирован'
 	end
-	
+
 	def self.oldprice
 		require 'mechanize'
 		a = Mechanize.new
@@ -133,14 +133,14 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 		products_pages = ['https://evateks.ru/store.aspx?sec_id=125&show=all','https://evateks.ru/store.aspx?sec_id=126&show=all','https://evateks.ru/store.aspx?sec_id=1276&show=all','https://evateks.ru/store.aspx?sec_id=128&show=all','https://evateks.ru/store.aspx?sec_id=131&show=all','https://evateks.ru/store.aspx?sec_id=132&show=all','https://evateks.ru/store.aspx?sec_id=25&show=all']
 
 # 		products = Evatek.order(:id)
-# 		
+#
 # 		products.each do |p|
 # 			doc = a.get(p.url)
 # 			cprice = doc.css('.itemOptPrices .half-size .main-p').text.split(' ')[0]
 # 			price = doc.css('.itemOptPrices .half-size .roznPrice').text.split(' ')[0]
 # 			p.update_attributes(price: price, cprice: cprice)
 # 		end
-		
+
 		products_pages.each do |pp|
 			doc = a.get(pp)
 			products_block = doc.css('.itemsBlock')[1]
@@ -159,36 +159,36 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 				end
 			end
 		end
-		
+
 	end
-	
+
 	def self.import(file)
 		Evatek.update_all(:qt => '0')
 		colors = Evatek.pluck(:cvet).compact.uniq
 		sizes_ru = Evatek.pluck(:razmer_ru).compact.uniq
 		sizes_eu = Evatek.pluck(:razmer_eu).compact.uniq
-		
+
 		spreadsheet = open_spreadsheet(file)
 		header = spreadsheet.row(7)
 		(8..spreadsheet.last_row).each do |i|
-		     
+
 			row = Hash[[header, spreadsheet.row(i)].transpose]
 			sku = row["Штрихкод"].to_s
 			svoistva = row["Характеристика"].to_s.gsub('цв.',' ').gsub('р-р:',' ').gsub('(',' ').gsub(')',' ').strip.split(' ')
 			puts svoistva
 			qt = row["В наличии Остаток"].to_s
 			cprice = spreadsheet.cell(i,'K').to_s.strip if spreadsheet.cell(i,'K') !=nil
-			pseudo_sku = row["Артикул"].to_s			
+			pseudo_sku = row["Артикул"].to_s
 			#sizes.any? {|s| svoistva.include?(s)}
 			size_eu = (sizes_eu & svoistva)[0]
 			size_ru = (sizes_ru & svoistva)[0]
 			color = (colors & svoistva)[0]
-			
+
 			evateks = Evatek.where(sku: sku)
 			evateks.each do |evatek|
 				evatek.update_attributes(qt: qt, cprice: cprice)
 			end
-			
+
 			if !svoistva.include?('ДИСКОНТ')
 			evatek_with_ru = Evatek.where("title LIKE ? and cvet = ? and razmer_ru = ?", "%#{pseudo_sku}%", color, size_ru).first
 			if evatek_with_ru
@@ -200,10 +200,10 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 			end
 			end
 		end
-		
+
 	end
-	
-	
+
+
 	def self.open_spreadsheet(file)
 	    case File.extname(file.original_filename)
 	    when ".csv" then Roo::CSV.new(file.path, csv_options: {col_sep: ";"})
@@ -213,5 +213,14 @@ sizes_eu = ["XL", "S", "M", "L", "XXL", "2XL", "S/M", "L/XL", "4XL", "3XL", "XS-
 	    else raise "Unknown file type: #{file.original_filename}"
 	    end
 	end
-	
+
+
+	def self.create_update_by_eid(data)
+		puts 'start create_update_by_eid '+Time.now.to_s
+		evatek = Evatek.find_by_eid(data[:eid])
+		evatek.present? ? evatek.update_attributes(data) : Evatek.create(data)
+
+		puts 'finish create_update_by_eid '+Time.now.to_s
+	end
+
 end
