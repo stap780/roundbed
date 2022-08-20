@@ -8,7 +8,7 @@
 	<%# file_field_tag :file , :class =>'import_file'%><%# submit_tag "Импорт", :class =>'btn btn-light' %>
 	<%# end %>
 	<div class="btn-group ml-3" role="group" aria-label="Button group with nested dropdown">
-		<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		Действия
 		</button>
 		<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -22,15 +22,17 @@
 		<a href="http://68.183.166.25/insales_evatek.csv" class='dropdown-item'>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> Скачать</a>
 		<% end %>
 		</div>
-		<%= link_to '<span class="oi oi-trash"></span>'.html_safe, delete_selected_evateks_path, class: 'btn btn-outline-dark', id: 'deleteAll', remote: true%>
+		<%= link_to '<span class="oi oi-trash"></span>'.html_safe, delete_selected_evateks_path, class: 'btn btn-outline-dark btn-sm', id: 'deleteAll', remote: true%>
 	</div>
 </div>
 <%= search_form_for @search, {class: 'form-inline col-md-7 pl-0 pr-0'} do |f|%>
+<div class="input-group input-group-sm">
 	<%= f.search_field :eid_cont_any, placeholder: 'Еватек ID', class: "form-control input-sm", style: "max-width:120px;" %>
-	<%= f.search_field :sku_or_title_cont_any, placeholder: 'Штрихкод, название', class: "form-control input-sm", style: "max-width:160px;" %>
-	<%= f.select :vendor_cont, Evatek.all.pluck(:vendor).uniq, { :prompt => 'Бренд'}, class: "form-select", style: "max-width:140px;" %>
+	<%= f.search_field :sku_or_title_cont_any, placeholder: 'Штрихкод, название', class: "form-control input-sm" %>
+	<%= f.select :vendor_cont, Evatek.all.pluck(:vendor).uniq, { :prompt => 'Бренд'}, class: "form-select" %>
 	<%= button_tag(type: 'submit', :class => "btn btn-success") do %><span class="oi oi-magnifying-glass"></span><% end %>
 	<%= link_to '<span class="oi oi-reload"></span>'.html_safe, evateks_path, class: 'btn btn-outline-dark' %>
+	</div>
 <% end %>
 
 </div>
