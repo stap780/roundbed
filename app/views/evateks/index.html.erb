@@ -12,7 +12,7 @@
 		Действия
 		</button>
 		<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-		<%= link_to "Импорт файла", file_import_evateks_path, remote: 'true', id: 'file_import', 'data-bs-toggle' =>  "modal", 'data-target' => '#modal-edit', class: 'dropdown-item' %>
+		<%= link_to "Импорт файла", file_import_evateks_path, remote: 'true', id: 'file_import', 'data-bs-toggle' =>  "modal", 'data-bs-target' => '#modal-edit', class: 'dropdown-item' %>
 		<%= link_to 'Создать', new_evatek_path , class: 'dropdown-item d-none'%>
 		<%= link_to 'Загрузить/Обновить', download_evateks_path , class: 'dropdown-item'%>
 		<%= link_to 'Создать файл insales', insales_evateks_path , class: 'dropdown-item'%>
