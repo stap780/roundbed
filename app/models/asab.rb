@@ -25,14 +25,14 @@ class Asab < ActiveRecord::Base
 	end
 
 	def self.download
-		pr_ids = (12..3000).to_a
+		pr_ids = (12..33).to_a
 		pr_ids.each do |pr_id|
 		puts pr_id.to_s
 		href = "http://asabella-life.ru/index.php?route=product/product&product_id="+pr_id.to_s
 		RestClient.get( href) { |response, request, result, &block|
 				case response.code
 				when 200
-					pr_doc = Nokogiri::HTML(open(href, :read_timeout => 240))
+					pr_doc = Nokogiri::HTML(response)
 		# 			desc = pr_doc.css('[id="product-full-desc"]').inner_html
 					title = pr_doc.css("h1").text
 					desc = pr_doc.css("#tab-description").inner_html.strip
@@ -60,12 +60,8 @@ class Asab < ActiveRecord::Base
 					end
 
 					aid = pr_id
-					pict_site =pr_doc.css('.cloud-zoom-gallery')
-					picts = []
-					pict_site.each do |p|
-						picts.push(p['href'])
-					end
-					pict = picts.to_s.gsub('"','').gsub('[','').gsub(']','').gsub(',','')
+					pict_site = pr_doc.css('.imgthumb').present? ? pr_doc.css('.imgthumb a').map{|im| URI.encode(im['href']) if im['href'] != "javascript:void(0)" && !im['href'].include?("no_image") }.uniq : []
+					pict = pict_site.join(' ')
 					asab = Asab.find_by_sku(sku)
 					if asab.present?
 					asab.update_attributes(:aid => aid, :title => title, :desc => desc, :image => pict)

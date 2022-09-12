@@ -38,6 +38,7 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'cancancan'
 gem 'best_in_place', '~> 3.0.1'
+gem "cld"
 
 
 gem 'bcrypt_pbkdf', '< 2.0', :require => false

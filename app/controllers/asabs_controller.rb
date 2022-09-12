@@ -5,9 +5,8 @@ class AsabsController < ApplicationController
   # GET /asabs
   # GET /asabs.json
   def index
-#     @asabs = Asab.all
-	@search = Asab.ransack(params[:q]) #используется application_controller и там в before filter :set_search
-	@search.sorts = 'id asc' if @search.sorts.empty? # сортировка таблицы по id по умолчанию 
+	@search = Asab.ransack(params[:q])
+	@search.sorts = 'id asc' if @search.sorts.empty?
 	@asabs = @search.result.paginate(page: params[:page], per_page: 100)
   end
 
@@ -64,24 +63,24 @@ class AsabsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def download
-	Asab.delay.download
-	flash[:notice] = 'Задача запущена'
-	redirect_to asabs_path	
+		Rails.env.development? ? Asab.download : Asab.delay.download
+		flash[:notice] = 'Задача запущена'
+		redirect_to asabs_path
   end
-  
+
 	def insales
-		Asab.delay.insales_to_csv
+		Rails.env.development? ? Asab.insales_to_csv : Asab.delay.insales_to_csv
 		flash[:notice] = 'Задача запущена'
 		redirect_to asabs_path
 	end
-	
+
   def import
-    Asab.import(params[:file])
-	redirect_to asabs_path	
+		Asab.import(params[:file])
+		redirect_to asabs_path
   end
-  
+
 	def delete_selected
 		@asabs = Asab.find(params[:ids])
 		@asabs.each do |item|

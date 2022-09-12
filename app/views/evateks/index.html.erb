@@ -19,7 +19,7 @@
 		<% file_ins = "#{Rails.public_path}"+'/insales_evatek.csv'%>
 		<% check = File.file?(file_ins)%>
 		<% if check.present? %>
-		<a href="http://68.183.166.25/insales_evatek.csv" class='dropdown-item'>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> Скачать</a>
+		<a href="/insales_evatek.csv" class='dropdown-item'>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> Скачать</a>
 		<% end %>
 		</div>
 		<%= link_to '<span class="oi oi-trash"></span>'.html_safe, delete_selected_evateks_path, class: 'btn btn-outline-dark btn-sm', id: 'deleteAll', remote: true%>
@@ -53,8 +53,8 @@
       <th>Цвет</th>
       <th>Краткое</th>
       <th>Полное</th>
-      <th >Info</th>
-      <th style="min-width:150px;">Image</th>
+      <th>Info</th>
+      <th>Image</th>
       <th colspan="1"></th>
     </tr>
   </thead>
@@ -76,12 +76,13 @@
         <td><%= evatek.sdesc %></td>
         <td><%= truncate(evatek.desc, length: 30) %></td>
         <td>Производитель: <%= evatek.vendor %> Коллекция: <%= evatek.col %> Страна: <%= evatek.country %> Uzor: <%= evatek.uzor %> Состав: <%= evatek.sostav %> Вес: <%= evatek.weight %></td>
-      <td class="row ml-0 mr-0">
-        <% if evatek.image %><% evatek.image.split(' ').each do |pict| %>
-        <div class="w-25"><img class="img-thumbnail" src="<%= pict %>"></div>
-        <% end %><% end %>
-      </td>
-<!--         <td><%# link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_evatek_path(evatek) %></td> -->
+				<td>
+				<div class="row ml-0 mr-0">
+					<% if evatek.image %><% evatek.image.split(' ').each do |pict| %>
+	        <div class="col-3"><img class="img-thumbnail" src="<%= pict %>"></div>
+	        <% end %><% end %>
+					</div>
+				</td>
         <td><%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, evatek, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>

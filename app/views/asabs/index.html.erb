@@ -19,7 +19,7 @@
 	<% file_ins = "#{Rails.public_path}"+'/insales_asab1.csv'%>
 	<% check = File.file?(file_ins)%>
 	<% if check.present? %>
-	<p>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> <a href="http://68.183.166.25/insales_asab1.csv">Скачать</a></p>
+	<p>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> <a href="/insales_asab1.csv">Скачать</a></p>
 	<% end %>
 </div>
 
@@ -45,7 +45,7 @@
       <th>Cprice</th>
       <th>Price</th>
       <th>Qt</th>
-      <th>Image</th>
+      <th class="w-25">Image</th>
       <th>Sostav</th>
       <th colspan="3"></th>
     </tr>
@@ -63,7 +63,13 @@
         <td><%= asab.cprice %></td>
         <td><%= asab.price %></td>
         <td><%= asab.qt %></td>
-        <td><%= truncate(asab.image, length: 25) %></td>
+        <td>
+				<div class="row ml-0 mr-0">
+					<% if asab.image %><% asab.image.split(' ').each do |pict| %>
+	        <div class="col-3"><img class="img-thumbnail" src="<%= pict %>"></div>
+	        <% end %><% end %>
+					</div>
+				</td>
         <td><%= asab.sostav %></td>
         <td><%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_asab_path(asab) %></td>
         <td><%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, asab, method: :delete, data: { confirm: 'Are you sure?' } %></td>
