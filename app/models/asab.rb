@@ -25,7 +25,7 @@ class Asab < ActiveRecord::Base
 	end
 
 	def self.download
-		pr_ids = (12..4600).to_a
+		pr_ids = (12..4550).to_a
 		pr_ids.each do |pr_id|
 		puts pr_id.to_s
 		href = "http://asabella-life.ru/index.php?route=product/product&product_id="+pr_id.to_s
