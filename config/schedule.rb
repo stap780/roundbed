@@ -37,7 +37,7 @@ set :chronic_options, :hours24 => true
 #   runner "Laete.insales_to_csv"#, :environment => :production
 # end
 
-every 1.day, :at => '14:10' do #
+every 1.day, :at => '15:50' do #
   runner "Evatek.download"#, :environment => :production
 end
 every 1.day, :at => '14:20' do #
