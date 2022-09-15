@@ -38,7 +38,7 @@
       <th>Costprice</th>
       <th>Price</th>
       <th>Qt</th>
-      <th style="min-width:250px;">Image</th>
+      <th class="w-25">Image</th>
       <th>Vendor</th>
       <th>Model</th>
       <th>Iparam</th>
@@ -60,13 +60,13 @@
         <td><%= infa.costprice %></td>
         <td><%= infa.price %></td>
         <td><%= infa.qt %></td>
-      <td class="row ml-0 mr-0">
-        <% if infa.image %><% infa.image.split(' ').each do |pict| %>
-        <div class="w-25">
-          <img class="img-thumbnail" src="<%= pict %>">
-        </div>
-        <% end %><% end %>
-      </td>
+			<td>
+			<div class="row ml-0 mr-0">
+				<% if infa.image %><% infa.image.split(' ').each do |pict| %>
+				<div class="col-3"><img class="img-thumbnail" src="<%= pict %>"></div>
+				<% end %><% end %>
+				</div>
+			</td>
         <td><%= infa.vendor %></td>
         <td><%= infa.model %></td>
         <td><%= infa.i_param %></td>
