@@ -63,13 +63,7 @@
         <td><%= asab.cprice %></td>
         <td><%= asab.price %></td>
         <td><%= asab.qt %></td>
-        <td>
-				<div class="row ml-0 mr-0">
-					<% if asab.image %><% asab.image.split(' ').each do |pict| %>
-	        <div class="col-3"><img class="img-thumbnail" src="<%= pict %>"></div>
-	        <% end %><% end %>
-					</div>
-				</td>
+				<td><% if asab.image %><%= asab.image.split(' ').count %> шт<% end %></td>
         <td><%= asab.sostav %></td>
         <td><%= link_to '<i class="fa fa-pencil" aria-hidden="true"></i>'.html_safe, edit_asab_path(asab) %></td>
         <td><%= link_to '<i class="fa fa-trash" aria-hidden="true"></i>'.html_safe, asab, method: :delete, data: { confirm: 'Are you sure?' } %></td>
