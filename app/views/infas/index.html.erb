@@ -60,13 +60,7 @@
         <td><%= infa.costprice %></td>
         <td><%= infa.price %></td>
         <td><%= infa.qt %></td>
-			<td>
-			<div class="row ml-0 mr-0">
-				<% if infa.image %><% infa.image.split(' ').each do |pict| %>
-				<div class="col-3"><img class="img-thumbnail" src="<%= pict %>"></div>
-				<% end %><% end %>
-				</div>
-			</td>
+				<td><% if infa.image %><%= infa.image.split(' ').count %> шт<% end %></td>
         <td><%= infa.vendor %></td>
         <td><%= infa.model %></td>
         <td><%= infa.i_param %></td>
