@@ -61,9 +61,9 @@ end
 # every 1.day, :at => '15:20' do #
 #   runner "Best.insales_to_csv"#, :environment => :production
 # end
-# every 1.day, :at => '15:25' do #
-#   runner "Infa.download"#, :environment => :production
-# end
-# every 1.day, :at => '15:30' do #
-#   runner "Infa.insales_to_csv"#, :environment => :production
-# end
+every 1.day, :at => '15:25' do #
+  runner "Infa.download"#, :environment => :production
+end
+every 1.day, :at => '15:30' do #
+  runner "Infa.insales_to_csv"#, :environment => :production
+end

@@ -1,12 +1,12 @@
 class Infa < ActiveRecord::Base
-	
+
 	validates :fid, uniqueness: true
-	
+
 def self.download
 	puts "download Infa "+"#{Time.zone.now}"
 	productbefore = Infa.count
 	uri = "http://www.infania.ru/yml_products.xml"
-	
+
 		download_path = "#{Rails.public_path}"+"/"+uri.split('/').last.split('.').first+"_Infa.xml"
 		puts download_path
 		#удаляем старый файл
@@ -18,25 +18,25 @@ def self.download
 		#сохраняем новый файл
 		download = open(uri)
 		IO.copy_stream(download, download_path)
-	
-# 	    response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
-	    doc = File.open(download_path)
-	    data = Nokogiri::XML(doc, nil, "UTF-8")
-	    product = "yml_catalog/shop/offers/offer"
-	    mypr = data.xpath(product)
-	    cat = "yml_catalog/shop/categories/category"
-	    mycat = data.xpath(cat)
-	    Infa.update_all(:qt=>0)
-	    puts "set 0 qt"
-		
+
+# 	response = RestClient.get uri, :accept => :xml, :content_type => "application/xml"
+    doc = File.open(download_path)
+    data = Nokogiri::XML(doc, nil, "UTF-8")
+    product = "yml_catalog/shop/offers/offer"
+    mypr = data.xpath(product)
+    cat = "yml_catalog/shop/categories/category"
+    mycat = data.xpath(cat)
+    Infa.update_all(:qt=>0)
+    puts "set 0 qt"
+
 		mypr.each do |pr|
 			fid = pr["id"]
 # 			puts fid
 			#sku = pr.css("[name='Артикул']").text.strip
 			sku = pr.xpath("vendorCode").text.strip
 			title = pr.xpath("name").text.strip
-			link = pr.xpath("url").text#.split('?')[0] 
-			price = pr.xpath("price").text.split('.')[0] 
+			link = pr.xpath("url").text#.split('?')[0]
+			price = pr.xpath("price").text.split('.')[0]
 			costprice = price.to_f*0.5
 			desc = pr.xpath("description").text.strip.gsub('Наведите курсор на иконку, чтобы узнать больше!','')
 			feature = pr.xpath("features").text.strip.gsub('Наведите курсор на иконку, чтобы узнать больше!','')
@@ -44,11 +44,8 @@ def self.download
 			vendor = pr.xpath("vendor").text.strip
 			model = pr.xpath("model").text.strip
 			quantity = pr.xpath("quantity").text.strip
-			if quantity == ">10"
-				qt = '10'
-			else 
-				qt = quantity
-			end
+
+			qt = quantity == ">10" ? "10" : quantity
 
 			cat_id = pr.xpath("categoryId").text
 			cat = "yml_catalog/shop/categories/category"
@@ -67,7 +64,7 @@ def self.download
 				end
 			end
 			cat = cats_array.to_s.gsub('"','').gsub('[','').gsub(']','').gsub(',','/')
-			
+
 			pict = []
 			picts = pr.xpath("picture")
 			picts.each do |pic|
@@ -81,7 +78,7 @@ def self.download
 				vparam_array.push(vparam_string)
 			end
 			vparam = vparam_array.join('---')#.to_s.gsub('"','').gsub('[','').gsub(']','').gsub(',','---')
-			
+
 			if vendor == 'Lorena Canals'
 				@infa = Infa.where("fid = ?", fid)
 				if @infa.present?
@@ -91,10 +88,10 @@ def self.download
 				else
 					Infa.create(:fid => fid, :sku => sku, :barcode => barcode, :feature => feature, :desc => desc, :title=> title, :price=>price, :costprice => costprice, :qt=>qt, :image=>image, :cat=>cat, :i_param=>vparam, :model => model, :vendor => vendor )
 				end
-			
+
 			end
 	  	end
-		
+
 	productafter = Infa.count
 # 	InfaMailer.download(productbefore, productafter).deliver_now
 	puts "Finish download Infa"
@@ -131,8 +128,8 @@ def self.insales_to_csv
 				qt = pr.qt
 				desc = pr.desc + pr.feature
 				if desc !=nil
-				shortdesc = desc.split('.')[0]+'.'+desc.split('.')[1] 
-				else 
+				shortdesc = desc.split('.')[0]+'.'+desc.split('.')[1]
+				else
 				shortdesc = ''
 				end
 				vendor = pr.vendor
@@ -140,10 +137,10 @@ def self.insales_to_csv
 				writer << [fid, sku, title, shortdesc, desc, costprice, price, qt, image, vendor, model, 'Infa' ]
 				end
 			end
-		end #CSV.open 
-		
+		end #CSV.open
+
 		# дополняем header файла названиями параметров
-		
+
 		vparamHeader = []
 		p = @infas.select(:i_param)
 		p.each do |p|
@@ -154,12 +151,12 @@ def self.insales_to_csv
 			end
 		end
 		addHeaders = vparamHeader.uniq
-				
+
 		# Load the original CSV file
 		rows = CSV.read(file, headers: true).collect do |row|
 			row.to_hash
 		end
-		
+
 		# Original CSV column headers
 		column_names = rows.first.keys
 		# Array of the new column headers
@@ -181,7 +178,7 @@ def self.insales_to_csv
 		File.open(file, 'w') { |file| file.write(s) }
 		end
 		# Overwrite csv file
-		
+
 		# заполняем параметры по каждому товару в файле
 		new_file = "#{Rails.public_path}"+'/insales_infa.csv'
 		CSV.open(new_file, "w") do |csv_out|
@@ -209,6 +206,6 @@ def self.insales_to_csv
 # 	InfaMailer.insales.deliver_now
 	puts "Finish Файл Infa инсалес"
 end
-	
-	
+
+
 end
