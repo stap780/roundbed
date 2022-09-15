@@ -43,9 +43,9 @@
       <!--<li class="nav-item <%= 'active' if current_page?(bests_path) %>">-->
         <%# link_to 'Best', bests_path, {:class=> 'nav-link'} %>
       <!--</li>-->
-		<!--<li class="nav-item <%= 'active' if current_page?(infas_path) %>">-->
-			<%# link_to 'Infa', infas_path, {:class=> 'nav-link'} %>
-		<!--</li>-->
+		<li class="nav-item <%= 'active' if current_page?(infas_path) %>">
+			<%= link_to 'Infa', infas_path, {:class=> 'nav-link'} %>
+		</li>
       <li class="nav-item <%= 'active' if current_page?(users_path) %>">
         <%= link_to 'Пользователи', users_path, {:class=> 'nav-link'} %>
       </li>
