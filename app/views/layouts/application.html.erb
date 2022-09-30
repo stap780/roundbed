@@ -34,9 +34,9 @@
       <!--<li class="nav-item <%= 'active' if current_page?(cleos_path) %>">-->
         <%# link_to 'Cleo', cleos_path, {:class=> 'nav-link'} %>
       <!--</li>-->
-      <!--<li class="nav-item <%= 'active' if current_page?(marcs_path) %>">-->
-        <%# link_to 'MarcAndre', marcs_path, {:class=> 'nav-link'} %>
-      <!--</li>-->
+      <li class="nav-item <%= 'active' if current_page?(marcs_path) %>">
+        <%= link_to 'MarcAndre', marcs_path, {:class=> 'nav-link'} %>
+      </li>
       <li class="nav-item <%= 'active' if current_page?(asabs_path) %>">
         <%= link_to 'Asabella', asabs_path, {:class=> 'nav-link'} %>
       </li>
