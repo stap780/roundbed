@@ -21,7 +21,7 @@
 	<% file_ins = "#{Rails.public_path}"+'/insales_marc.csv'%>
 	<% check = File.file?(file_ins)%>
 	<% if check.present? %>
-	<p>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> <a href="http://68.183.166.25/insales_marc.csv">Скачать</a></p>
+	<p>Файл создан - <%=File.ctime(file_ins).in_time_zone.strftime("%d/%m/%Y %H:%M" ) %> <a href="/insales_marc.csv">Скачать</a></p>
 	<% end %>
 </div>
 

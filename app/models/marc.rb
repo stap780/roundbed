@@ -48,15 +48,15 @@ class Marc < ActiveRecord::Base
 			puts "excelx_value - "+spreadsheet.excelx_value(i, 'C').to_s
 			# puts spreadsheet.formatted_value(i,'C')
 			puts "razmer - "+spreadsheet.cell(i,'C').to_s
-				marcs = Marc.where(:title => title, :razmer => @razmer, :razmer2 => @razmer2, :cvet => cvet)
-				if marcs.present?
-					marcs.each do |marc|
-						marc.update_attributes(sku: sku, sdesc: sdesc, desc: desc, qt: qt, cprice: cprice, price: price, razmer: @razmer, razmer2: @razmer2, cvet: cvet)
-					end
-				else
-					Marc.create(sku: sku, title: title, sdesc: sdesc, desc: desc, qt: qt, cprice: cprice, price: price, razmer: @razmer, razmer2: @razmer2, cvet: cvet)
- 				end
+			marcs = Marc.where(:title => title, :razmer => @razmer, :razmer2 => @razmer2, :cvet => cvet)
+			if marcs.present?
+				marcs.each do |marc|
+					marc.update_attributes(sku: sku, sdesc: sdesc, desc: desc, qt: qt, cprice: cprice, price: price, razmer: @razmer, razmer2: @razmer2, cvet: cvet)
+				end
+			else
+				Marc.create(sku: sku, title: title, sdesc: sdesc, desc: desc, qt: qt, cprice: cprice, price: price, razmer: @razmer, razmer2: @razmer2, cvet: cvet)
 			end
+		end
 		end
 # 		Marc.get_image
 	end
@@ -66,45 +66,45 @@ class Marc < ActiveRecord::Base
 		marcs = Marc.where(image: [nil, '']).order(:id)#.limit(8)
 		marcs.each do |mark|
 		url = "https://marcandre.com/search/index.php?q="+mark.sku
-			RestClient.get( url ) { |response, request, result, &block|
-				case response.code
-				when 200
-				doc = Nokogiri::HTML(open(url, :read_timeout => 30))
-				products = doc.css('.product-item__wrap .main-content .product-item-image-wrapper')
+		RestClient.get( url ) { |response, request, result, &block|
+			case response.code
+			when 200
+			doc = Nokogiri::HTML(open(url, :read_timeout => 30))
+			products = doc.css('.product-item__wrap .main-content .product-item-image-wrapper')
 # 				puts products
 # 				puts products.count
-				product_link = products.map{|p| p.attributes['href'].value if p.attributes['title'].value.include?(mark.sku)}[0]
-				if product_link.present?
-					pr_doc = Nokogiri::HTML(open("https://marcandre.com"+product_link, :read_timeout => 30))
-					picts = []
-					tumb_picts = pr_doc.css(".product-item-detail-slider-container .product-item-detail-slider-controls-block .product-item-detail-slider-controls-image img")
-					if tumb_picts.size > 0
-						tumb_picts.each do |dp|
-							p = "https://marcandre.com"+dp['data-webp-src']
-							picts.push(p)
-					 	end
-				 	else
-				 		one_pict = pr_doc.css(".product-item-detail-slider-image.active img").present? ? "https://marcandre.com"+pr_doc.css(".product-item-detail-slider-image.active img")[0].attributes['src'].value : ''
-				 		picts.push(one_pict)
-				 	end
-				 	pict = picts.uniq.join(' ')
-				 	desc = pr_doc.css('#product_description').inner_html
-					chars = pr_doc.css("#product_characteristics span")
-					chars.each do |c|
-						if c.css('dt').text.strip == 'Состав'
-							@sostav = c.css('dd').text.strip
-						end
+			product_link = products.map{|p| p.attributes['href'].value if p.attributes['title'].value.include?(mark.sku)}[0]
+			if product_link.present?
+				pr_doc = Nokogiri::HTML(open("https://marcandre.com"+product_link, :read_timeout => 30))
+				picts = []
+				tumb_picts = pr_doc.css(".product-item-detail-slider-container .product-item-detail-slider-controls-block .product-item-detail-slider-controls-image img")
+				if tumb_picts.size > 0
+					tumb_picts.each do |dp|
+						p = "https://marcandre.com"+dp['data-webp-src']
+						picts.push(p)
 					end
-				 	mark.update_attributes(sostav: @sostav, desc: desc, image: pict, url: "https://marcandre.com"+product_link)
-			 	end
-				when 404
-					puts "error 404 - "+url	
-				when 422
-					puts '422'
 				else
-					response.return!(&block)
+					one_pict = pr_doc.css(".product-item-detail-slider-image.active img").present? ? "https://marcandre.com"+pr_doc.css(".product-item-detail-slider-image.active img")[0].attributes['src'].value : ''
+					picts.push(one_pict)
 				end
-				}
+				pict = picts.uniq.join(' ')
+				desc = pr_doc.css('#product_description').inner_html
+				chars = pr_doc.css("#product_characteristics span")
+				chars.each do |c|
+					if c.css('dt').text.strip == 'Состав'
+						@sostav = c.css('dd').text.strip
+					end
+				end
+				mark.update_attributes(sostav: @sostav, desc: desc, image: pict, url: "https://marcandre.com"+product_link)
+			end
+			when 404
+				puts "error 404 - "+url	
+			when 422
+				puts '422'
+			else
+				response.return!(&block)
+			end
+			}
 		end
 
 	end
@@ -143,39 +143,37 @@ class Marc < ActiveRecord::Base
 	def self.insales_to_csv
 		puts "Файл Marc инсалес"
 		
-			file_ins = "#{Rails.public_path}"+'/insales_marc.csv'
-			check = File.file?(file_ins)
-			if check.present?
-				File.delete(file_ins)
+		file_ins = "#{Rails.public_path}"+'/insales_marc.csv'
+		check = File.file?(file_ins)
+		File.delete(file_ins) if check.present?
+		
+		@marcs = Marc.all.order(:id)#.limit(2)
+		file = "#{Rails.root}/public/insales_marc.csv"
+		CSV.open( file, 'w') do |writer|
+		headers = ['sku', 'title', 'sdesc', 'desc', 'quantity', 'cost-price','price','image','razmer', 'razmer2', 'cvet', 'sostav', 'Strana','Proizvoditel', 'Kornevai']
+
+		writer << headers
+		@marcs.each do |pr|
+			sku = pr.sku
+			title = pr.title
+			sdesc = pr.sdesc
+			desc = pr.desc
+			qt = pr.qt
+			cprice = pr.cprice
+			price = pr.price
+			image = pr.image
+			if pr.razmer == 'Free'
+			razmer = 'uni'
+			else
+			razmer = pr.razmer
 			end
+			razmer2 = pr.razmer2
+			cvet = pr.cvet
+			sostav = pr.sostav
 			
-			@marcs = Marc.all.order(:id)#.limit(2)
-			file = "#{Rails.root}/public/insales_marc.csv"
-			CSV.open( file, 'w') do |writer|
-			headers = ['sku', 'title', 'sdesc', 'desc', 'quantity', 'cost-price','price','image','razmer', 'razmer2', 'cvet', 'sostav', 'Strana','Proizvoditel', 'Kornevai']
-	
-			writer << headers
-			@marcs.each do |pr|
-				sku = pr.sku
-				title = pr.title
-				sdesc = pr.sdesc
-				desc = pr.desc
-				qt = pr.qt
-				cprice = pr.cprice
-				price = pr.price
-				image = pr.image
-				if pr.razmer == 'Free'
-				razmer = 'uni'
-				else
-				razmer = pr.razmer
-				end
-				razmer2 = pr.razmer2
-				cvet = pr.cvet
-				sostav = pr.sostav
-				
-				writer << [sku, title, sdesc, desc, qt, cprice, price, image, razmer, razmer2, cvet, sostav,'Франция', "Marc & André", "MarcAndre" ]
-				end 
-			end #CSV.open    
+			writer << [sku, title, sdesc, desc, qt, cprice, price, image, razmer, razmer2, cvet, sostav,'Франция', "Marc & André", "MarcAndre" ]
+			end 
+		end #CSV.open    
 			
 # 			CleoMailer.insales.deliver_now
 		puts "Finish Файл Marc инсалес"
